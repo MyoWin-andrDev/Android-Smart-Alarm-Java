@@ -1,19 +1,27 @@
 package it.ezzie.smartalarm;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TimePicker;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+
 import it.ezzie.smartalarm.Entity.AlarmEntity;
 import it.ezzie.smartalarm.databinding.AdapterAlarmBinding;
 
 public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> {
     private Context context;
     private List<AlarmEntity> alarmList;
+    private Calendar calendar = Calendar.getInstance();
 
     public AlarmAdapter(Context context , List<AlarmEntity> alarmList){
         this.context = context;
@@ -38,7 +46,22 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     @Override
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
         var alarm = alarmList.get(position);
-        holder.binding.alarmTime.setText(alarm.getAlarmTime());
+        //InitTimePick
+        holder.binding.alarmTime.setOnClickListener(v -> {
+                TimePickerDialog.OnTimeSetListener timepick = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                        calendar.set(Calendar.MINUTE,minute);
+                        var formattedTime = new SimpleDateFormat("HH:mm").format(calendar.getTime());
+                        var formattedUnit = new SimpleDateFormat("aa").format(calendar.getTime());
+                        holder.binding.alarmTime.setText(formattedTime);
+                        holder.binding.alarmUnit.setText(formattedUnit);
+                    }
+                };
+                new TimePickerDialog(context,timepick, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false).show();
+
+        });
         holder.binding.alarmLabel.setText(alarm.getAlarmLabel());
     }
 
