@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/alarmTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="01:00"
+        android:textSize="50dp"
+        android:fontFamily="@font/mulish_regular"
+        android:gravity="center_vertical"
+        android:layout_marginStart="40dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Label"
+        android:textSize="16dp"
+        android:fontFamily="@font/mulish_regular"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/alarmTime"
+        app:layout_constraintTop_toBottomOf="@id/alarmTime"/>
+
+    <TextView
+        android:id="@+id/ampm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AM"
+        android:textSize="30dp"
+        app:layout_constraintStart_toEndOf="@id/alarmTime"
+        app:layout_constraintBottom_toBottomOf="@id/alarmTime"
+        android:layout_marginStart="10dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
