@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDatabase() {
         var db = AppDatabase.getInstance(this);
-        alarmDAO =
-
+        alarmDAO = db.alarmDAO();
     }
+
 }
