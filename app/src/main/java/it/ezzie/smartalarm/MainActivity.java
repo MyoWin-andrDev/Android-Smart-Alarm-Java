@@ -28,15 +28,15 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        initUI();
         initDatabase();
+        initUI();
     }
 
     private void initDatabase() {
         var db = AppDatabase.getInstance(this);
         alarmDAO = db.alarmDAO();
         alarmDAO.createAlarm(new AlarmEntity("4:00","Wake UP"));
-       // alarmList = alarmDAO.getAllAlarms();
+        alarmList = alarmDAO.getAllAlarms();
     }
     private void initUI(){
         alarmAdapter = new AlarmAdapter(this,alarmList);
