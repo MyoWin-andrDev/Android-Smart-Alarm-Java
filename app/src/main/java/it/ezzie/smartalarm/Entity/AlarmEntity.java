@@ -2,6 +2,7 @@ package it.ezzie.smartalarm.Entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Alarms")
@@ -12,6 +13,19 @@ public class AlarmEntity {
     private String alarmTime;
     @ColumnInfo(name = "Label")
     private String alarmLabel;
+
+    public AlarmEntity(){
+
+    }
+    @Ignore
+    public AlarmEntity( String alarmTime){
+        this.alarmTime = alarmTime;
+    }
+    @Ignore
+    public AlarmEntity( String alarmTime, String alarmLabel){
+        this.alarmTime = alarmTime;
+        this.alarmLabel = alarmLabel;
+    }
 
     public int getId() {
         return id;

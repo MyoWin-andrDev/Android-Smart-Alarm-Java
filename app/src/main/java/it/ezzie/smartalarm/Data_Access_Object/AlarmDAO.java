@@ -13,11 +13,11 @@ import it.ezzie.smartalarm.Entity.AlarmEntity;
 @Dao
 public interface AlarmDAO {
     @Insert
-    void createAlarm();
+    void createAlarm(AlarmEntity alarm);
     @Update
-    void updateAlarm();
+    void updateAlarm(AlarmEntity alarm);
     @Delete
-    void deleteAlarm();
+    void deleteAlarm(AlarmEntity alarm);
     @Query("SELECT * FROM Alarms")
     List<AlarmEntity> getAllAlarms();
 }
