@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="115dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    android:background="@drawable/bg_list">
 
     <TextView
         android:id="@+id/alarmTime"
@@ -26,17 +28,38 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/alarmTime"
-        app:layout_constraintTop_toBottomOf="@id/alarmTime"/>
+        app:layout_constraintTop_toBottomOf="@id/alarmTime"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/ampm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AM"
-        android:textSize="30dp"
+        android:textSize="25dp"
+        android:fontFamily="@font/mulish_regular"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/alarmTime"
         app:layout_constraintBottom_toBottomOf="@id/alarmTime"
         android:layout_marginStart="10dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_sun"
+        app:layout_constraintBottom_toTopOf="@id/ampm"
+        app:layout_constraintStart_toEndOf="@id/alarmTime" />
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@id/imageView"
+        app:trackDrawable="@drawable/bg_toggle"
+        android:layout_marginStart="50dp"/>
 
 
 
