@@ -1,6 +1,7 @@
 package it.ezzie.smartalarm;
 
 import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import it.ezzie.smartalarm.Data_Access_Object.AlarmDAO;
 import it.ezzie.smartalarm.Database.AppDatabase;
@@ -23,8 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private AlarmDAO alarmDAO;
     private AlarmAdapter alarmAdapter;
     private AlertDialog alertDialog;
-    private Calendar calendar;
-
+    private Calendar calendar = Calendar.getInstance();
+    private int resultHour;
+    private int resultMinute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         initDatabase();
         initUI();
-        initDialog();
+//        initDialog();
+//        initListener();
     }
 
     private void initDatabase() {
@@ -47,33 +51,45 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(alarmAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-    private void initDialog(){
-        //Floating Btn
-        var dialogBinding = ActivityEditAlarmBinding.inflate(getLayoutInflater());
-        binding.floatingBtn.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            alertDialog = builder.setView(dialogBinding.getRoot())
-                    .setCancelable(false)
-                    .create();
-            alertDialog.setOnShowListener(dialog -> {
-                alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_dialog);
-            });
-            alertDialog.show();
-        });
-        dialogBinding.btnCancel.setOnClickListener(v -> {
-            alertDialog.cancel();
-        });
-
-        dialogBinding.timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-            calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-            calendar.set(Calendar.MINUTE,minute);
-            var formattedHour = new SimpleDateFormat("HH").format(calendar.getTime());
-            var formattedMinute = new SimpleDateFormat("mm").format(calendar.getTime());
-            dialogBinding.hour.setText(formattedHour.toString());
-            dialogBinding.minute.setText(formattedMinute.toString());
-        });
-
-    }
+//    private void initDialog(){
+//        //Floating Btn
+//        var dialogBinding = ActivityEditAlarmBinding.inflate(getLayoutInflater());
+//        binding.floatingBtn.setOnClickListener(v -> {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            alertDialog = builder.setView(dialogBinding.getRoot())
+//                    .setCancelable(false)
+//                    .create();
+//            alertDialog.setOnShowListener(dialog -> {
+//                alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_dialog);
+//            });
+//            alertDialog.show();
+//        });
+//
+//        dialogBinding.timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
+//          calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+//          calendar.set(Calendar.MINUTE,minute);
+//
+//          int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+//          int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
+//          int totalCurrentMinute = currentHour * 60 + currentMinute;
+//          int totalSelectedMinute = hourOfDay * 60 + minute;
+//          int totalResultMinute = totalSelectedMinute - totalCurrentMinute;
+//          int resultHour = totalResultMinute / 60;
+//          int resultMinute = totalResultMinute % 60;
+//          if(totalResultMinute < 0){
+//              resultHour = -resultHour;
+//              resultMinute = -resultMinute;
+//          }
+//          dialogBinding.hour.setText(String.valueOf(resultHour));
+//          dialogBinding.minute.setText(String.format("%02d",resultMinute));
+//        });
+//
+//    }
+//    private void initListener(){
+//        dialogBinding.btnCancel.setOnClickListener(v -> {
+//            alertDialog.cancel();
+//        });
+//    }
 
 
 }
