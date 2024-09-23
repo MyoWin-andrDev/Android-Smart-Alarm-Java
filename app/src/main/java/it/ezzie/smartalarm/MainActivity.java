@@ -2,9 +2,11 @@ package it.ezzie.smartalarm;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
     private int resultHour;
     private int resultMinute;
+    private static final int CREATE_REQUEST_CODE = 123;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         initDatabase();
         initUI();
 //        initDialog();
-//        initListener();
+        initListener();
     }
 
     private void initDatabase() {
@@ -90,6 +93,20 @@ public class MainActivity extends AppCompatActivity {
 //            alertDialog.cancel();
 //        });
 //    }
+    private void initListener(){
+        binding.floatingBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EditAlarm.class);
+            startActivityForResult(intent,CREATE_REQUEST_CODE);
+        });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CREATE_REQUEST_CODE && resultCode == RESULT_OK){
+            if(data != null){
 
+            }
+        }
+    }
 }
