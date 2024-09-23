@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/antiWhite"
+    android:background="#e6e9e0"
     tools:context=".MainActivity">
 
     <TextView
@@ -52,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="#d5e8cf"
+        android:backgroundTint="#bbf0b5"
         android:src="@drawable/ic_add"
         android:layout_marginBottom="50dp"/>
 
