@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/white"
+    android:background="@drawable/bg_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditAlarm">
@@ -39,6 +39,7 @@
             android:textSize="16dp"/>
 
         <TextView
+            android:id="@+id/hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="9"
@@ -53,6 +54,7 @@
             android:textSize="16dp"/>
 
         <TextView
+            android:id="@+id/minute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="16"
@@ -70,6 +72,7 @@
     </LinearLayout>
 
     <TimePicker
+        android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/linearAlarm"
@@ -80,12 +83,27 @@
     
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/timePicker"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp">
         
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-        
+            android:backgroundTint="@color/error"
+            android:text="Cancel"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/greenDark"
+            android:text="OK"/>
+
     </LinearLayout>
 
 

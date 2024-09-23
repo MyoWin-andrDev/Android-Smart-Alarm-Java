@@ -7,4 +7,5 @@
     <color name="grey1">#BDBDBD</color>
     <color name="greenDark">#3a693a</color>
     <color name="greenLight">#bbf0b5</color>
+    <color name="error">#ba1a1a</color>
 </resources>
