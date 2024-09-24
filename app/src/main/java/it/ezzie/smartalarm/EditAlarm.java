@@ -1,5 +1,6 @@
 package it.ezzie.smartalarm;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -28,7 +29,6 @@ public class EditAlarm extends AppCompatActivity {
         setContentView(binding.getRoot());
         initDatabase();
         initData();
-        initListener();
     }
 
     private void initDatabase() {
@@ -54,14 +54,21 @@ public class EditAlarm extends AppCompatActivity {
           }
           binding.hour.setText(String.valueOf(resultHour));
           binding.minute.setText(String.format("%02d",resultMinute));
-        });
-    }
-    private void initListener(){
-        binding.btnCancel.setOnClickListener(v -> {
-            finish();
-        });
-        binding.btnOK.setOnClickListener(v -> {
 
+          //Getting Alarm Label
+              String label = binding.editLabel.getEditText().getText().toString();
+
+          //Cancel Button
+          binding.btnCancel.setOnClickListener(v -> {
+              finish();
+          });
+
+          //OK Button
+          binding.btnOK.setOnClickListener(v -> {
+              AlarmEntity alarm = new AlarmEntity()
+              Intent intent = new Intent(this, MainActivity.class)
+          });
         });
     }
+
 }
