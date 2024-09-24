@@ -65,8 +65,11 @@ public class EditAlarm extends AppCompatActivity {
 
           //OK Button
           binding.btnOK.setOnClickListener(v -> {
-              AlarmEntity alarm = new AlarmEntity()
-              Intent intent = new Intent(this, MainActivity.class)
+              AlarmEntity alarm = new AlarmEntity(String.valueOf(hourOfDay),String.valueOf(minute),label);
+              Intent intent = new Intent(this, MainActivity.class);
+              intent.putExtra("alarm",alarm);
+              setResult(RESULT_OK,intent);
+              finish();
           });
         });
     }

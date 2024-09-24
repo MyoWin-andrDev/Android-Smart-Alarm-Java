@@ -105,8 +105,15 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CREATE_REQUEST_CODE && resultCode == RESULT_OK){
             if(data != null){
-
+                AlarmEntity alarm = (AlarmEntity) data.getSerializableExtra("alarm");
+                alarmDAO.createAlarm(alarm);
+                refreshView();
             }
         }
+    }
+
+    private void refreshView() {
+        alarmList = alarmDAO.getAllAlarms();
+        alarmAdapter.setAlarm();
     }
 }

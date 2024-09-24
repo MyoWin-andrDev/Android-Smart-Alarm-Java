@@ -28,6 +28,11 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         this.alarmList = alarmList;
     }
 
+    public void setAlarm(List<AlarmEntity> alarmList) {
+        this.alarmList = alarmList;
+        this.notifyDataSetChanged();
+    }
+
     public class AlarmViewHolder extends RecyclerView.ViewHolder{
         private AdapterAlarmBinding binding;
         public AlarmViewHolder(AdapterAlarmBinding binding) {
@@ -53,9 +58,10 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
                         calendar.set(Calendar.MINUTE,minute);
-                        var formattedTime = new SimpleDateFormat("HH:mm").format(calendar.getTime());
+//                        var formattedTime = new SimpleDateFormat("HH:mm").format(calendar.getTime());
+//                        var formattedHour = new SimpleDateFormat("HH").format(calendar.getTime());
+//                        var formattedMinute = new SimpleDateFormat("mm").format(calendar.getTime());
                         var formattedUnit = new SimpleDateFormat("a").format(calendar.getTime());
-                        holder.binding.alarmTime.setText(formattedTime);
                         holder.binding.alarmUnit.setText(formattedUnit.toUpperCase());
                     }
                 };
@@ -63,6 +69,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 
         });
         holder.binding.alarmLabel.setText(alarm.getAlarmLabel());
+        holder.binding.alarmHour.setText(alarm.getAlarmHour());
+        holder.binding.alarmMinute.setText(alarm.getAlarmMinute());
     }
 
     @Override

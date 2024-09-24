@@ -6,18 +6,50 @@
     android:layout_margin="10dp"
     android:background="@drawable/bg_list">
 
-    <TextView
+    <LinearLayout
         android:id="@+id/alarmTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="01:00"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="30dp">
+
+    <TextView
+        android:id="@+id/alarmHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="01"
         android:textSize="40dp"
         android:fontFamily="@font/mulish_regular"
-        android:gravity="center_vertical"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"/>
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/alarmColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/alarmHour"
+        app:layout_constraintTop_toTopOf="@+id/alarmHour"
+        app:layout_constraintStart_toEndOf="@id/alarmHour"/>
+
+
+    <TextView
+        android:id="@+id/alarmMinute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/alarmHour"
+        app:layout_constraintBottom_toBottomOf="@id/alarmHour"
+        app:layout_constraintStart_toEndOf="@id/alarmColumn"
+        android:text="00"
+        android:textSize="40dp"
+        android:fontFamily="@font/mulish_regular"
+        android:gravity="center_vertical" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/alarmLabel"

@@ -5,12 +5,16 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "Alarms")
-public class AlarmEntity {
+public class AlarmEntity implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "Time")
-    private String alarmTime;
+    @ColumnInfo(name = "Hour")
+    private String alarmHour;
+    @ColumnInfo(name = "Minute")
+    private String alarmMinute;
     @ColumnInfo(name = "Label")
     private String alarmLabel;
 
@@ -18,12 +22,14 @@ public class AlarmEntity {
 
     }
     @Ignore
-    public AlarmEntity( String alarmTime){
-        this.alarmTime = alarmTime;
+    public AlarmEntity( String alarmHour, String alarmMinute){
+        this.alarmHour = alarmHour;
+        this.alarmMinute = alarmMinute;
     }
     @Ignore
-    public AlarmEntity( String alarmTime, String alarmLabel){
-        this.alarmTime = alarmTime;
+    public AlarmEntity( String alarmHour, String alarmMinute, String alarmLabel){
+        this.alarmHour = alarmHour;
+        this.alarmMinute = alarmMinute;
         this.alarmLabel = alarmLabel;
     }
 
@@ -35,12 +41,20 @@ public class AlarmEntity {
         this.id = id;
     }
 
-    public String getAlarmTime() {
-        return alarmTime;
+    public String getAlarmHour() {
+        return alarmHour;
     }
 
-    public void setAlarmTime(String alarmTime) {
-        this.alarmTime = alarmTime;
+    public void setAlarmHour(String alarmHour) {
+        this.alarmHour = alarmHour;
+    }
+
+    public String getAlarmMinute() {
+        return alarmMinute;
+    }
+
+    public void setAlarmMinute(String alarmMinute) {
+        this.alarmMinute = alarmMinute;
     }
 
     public String getAlarmLabel() {
