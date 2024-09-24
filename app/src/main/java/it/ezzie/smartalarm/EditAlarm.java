@@ -56,7 +56,7 @@ public class EditAlarm extends AppCompatActivity {
           binding.minute.setText(String.format("%02d",resultMinute));
 
           //Getting Alarm Label
-              String label = binding.editLabel.getEditText().getText().toString();
+              String label = String.valueOf(binding.alarmEditTxt.getText());
 
           //Cancel Button
           binding.btnCancel.setOnClickListener(v -> {
@@ -65,7 +65,13 @@ public class EditAlarm extends AppCompatActivity {
 
           //OK Button
           binding.btnOK.setOnClickListener(v -> {
-              AlarmEntity alarm = new AlarmEntity(String.valueOf(hourOfDay),String.valueOf(minute),label);
+              AlarmEntity alarm;
+              if(label.isEmpty()){
+                  alarm = new AlarmEntity(String.valueOf(hourOfDay),String.format("%02d",minute));
+              }
+              else {
+                   alarm = new AlarmEntity(String.valueOf(hourOfDay), String.format("%02d", minute), label);
+              }
               Intent intent = new Intent(this, MainActivity.class);
               intent.putExtra("alarm",alarm);
               setResult(RESULT_OK,intent);

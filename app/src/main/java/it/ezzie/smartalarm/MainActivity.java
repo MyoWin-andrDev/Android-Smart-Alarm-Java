@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private void initDatabase() {
         var db = AppDatabase.getInstance(this);
         alarmDAO = db.alarmDAO();
-        alarmDAO.createAlarm(new AlarmEntity("4:00","Wake UP"));
+        //alarmDAO.createAlarm(new AlarmEntity("4:00","Wake UP"));
         alarmList = alarmDAO.getAllAlarms();
     }
     private void initUI(){
@@ -114,6 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void refreshView() {
         alarmList = alarmDAO.getAllAlarms();
-        alarmAdapter.setAlarm();
+        alarmAdapter.setAlarm(alarmList);
     }
 }
