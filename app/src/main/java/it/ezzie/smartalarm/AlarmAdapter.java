@@ -22,10 +22,12 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     private Context context;
     private List<AlarmEntity> alarmList;
     private Calendar calendar = Calendar.getInstance();
+    private AlarmClickListener listener;
 
-    public AlarmAdapter(Context context , List<AlarmEntity> alarmList){
+    public AlarmAdapter(Context context , List<AlarmEntity> alarmList, AlarmClickListener listener){
         this.context = context;
         this.alarmList = alarmList;
+        this.listener = listener;
     }
 
     public void setAlarm(List<AlarmEntity> alarmList) {
@@ -39,6 +41,10 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public interface AlarmClickListener{
+        void onAlarmClicked(AlarmEntity alarm);
     }
 
     @NonNull
@@ -78,6 +84,11 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         holder.binding.alarmLabel.setText(alarm.getAlarmLabel());
         holder.binding.alarmHour.setText(alarm.getAlarmHour());
         holder.binding.alarmMinute.setText(alarm.getAlarmMinute());
+        var alarms = alarmList.get(position);
+        holder.binding.alarmTime.setOnLongClickListener(v -> {
+            listener.onAlarmClicked(alarms);
+            return true;
+        });
     }
 
     @Override

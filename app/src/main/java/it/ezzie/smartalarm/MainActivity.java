@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private int resultHour;
     private int resultMinute;
     private static final int CREATE_REQUEST_CODE = 123;
+    private static final int UPDATE_REQUEST_CODE = 234;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         initListener();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refreshView();
+    }
+
     private void initDatabase() {
         var db = AppDatabase.getInstance(this);
         alarmDAO = db.alarmDAO();
@@ -50,7 +58,11 @@ public class MainActivity extends AppCompatActivity {
         alarmList = alarmDAO.getAllAlarms();
     }
     private void initUI(){
-        alarmAdapter = new AlarmAdapter(this,alarmList);
+        alarmAdapter = new AlarmAdapter(this,alarmList, alarmList1 -> {
+            Intent intent = new Intent(this, EditAlarm.class);
+            intent.putExtra("alarm", alarmList1) ;
+            startActivity(intent);
+        });
         binding.recyclerView.setAdapter(alarmAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

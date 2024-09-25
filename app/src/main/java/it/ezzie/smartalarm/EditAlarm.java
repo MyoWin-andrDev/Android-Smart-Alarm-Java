@@ -2,6 +2,7 @@ package it.ezzie.smartalarm;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class EditAlarm extends AppCompatActivity {
     private ActivityEditAlarmBinding binding;
     private AlarmDAO alarmDAO;
     private Calendar calendar = Calendar.getInstance();
+    private AlarmEntity alarmList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +32,7 @@ public class EditAlarm extends AppCompatActivity {
         setContentView(binding.getRoot());
         initDatabase();
         initData();
-        initListener();
-    }
-
-    private void initListener() {
+        initUI();
     }
 
     private void initDatabase() {
@@ -65,14 +64,23 @@ public class EditAlarm extends AppCompatActivity {
 
           //Cancel Button
           binding.btnCancel.setOnClickListener(v -> {
+              if(getIntent() != null){
+                  alarmDAO.deleteAlarm(alarmList);
+                  finish();
+              }
               finish();
           });
 
           //OK Button
-          binding.btnOK.setOnClickListener(v -> {
+              binding.btnOK.setOnClickListener(v -> {
+              String finalHour = String.valueOf(finalResultHour);
+              if(getIntent() != null){
+
+              }
+              //Create
               AlarmEntity alarm;
               //Getting Alarm Label
-              String label = binding.alarmEditTxt.getText().toString().trim();
+                  String label = binding.alarmEditTxt.getText().toString().trim();
               if(label.isEmpty()){
                   alarm = new AlarmEntity(String.valueOf(hourOfDay),String.format("%02d",minute),formattedUnit);
               }
@@ -85,6 +93,23 @@ public class EditAlarm extends AppCompatActivity {
               finish();
           });
         });
+    }
+    private void initUI() {
+        if (getIntent() != null) {
+            alarmList = (AlarmEntity) getIntent().getSerializableExtra("alarm");
+            if (alarmList != null) {
+                binding.timePicker.setHour(Integer.parseInt(alarmList.getAlarmHour()));
+                binding.timePicker.setMinute(Integer.parseInt(alarmList.getAlarmMinute()));
+                binding.alarmEditTxt.setText(alarmList.getAlarmLabel());
+                binding.btnCancel.setText("Delete");
+                binding.btnOK.setText("Update");
+                Log.d("EditAlarm", "Alarm loaded: " + alarmList.getAlarmHour() + ":" + alarmList.getAlarmMinute());
+            } else {
+                Log.d("EditAlarm", "No alarm data found in Intent.");
+            }
+        } else {
+            Log.d("EditAlarm", "Intent is null.");
+        }
     }
 
 }
