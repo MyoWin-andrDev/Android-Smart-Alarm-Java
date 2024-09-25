@@ -30,6 +30,10 @@ public class EditAlarm extends AppCompatActivity {
         setContentView(binding.getRoot());
         initDatabase();
         initData();
+        initListener();
+    }
+
+    private void initListener() {
     }
 
     private void initDatabase() {
