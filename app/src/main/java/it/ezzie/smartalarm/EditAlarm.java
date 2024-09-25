@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import it.ezzie.smartalarm.Data_Access_Object.AlarmDAO;
@@ -55,8 +56,8 @@ public class EditAlarm extends AppCompatActivity {
           binding.hour.setText(String.valueOf(resultHour));
           binding.minute.setText(String.format("%02d",resultMinute));
 
-          //Getting Alarm Label
-              String label = String.valueOf(binding.alarmEditTxt.getText());
+          //Init AlarmUnit
+            var formattedUnit = new SimpleDateFormat("a").format(calendar.getTime());
 
           //Cancel Button
           binding.btnCancel.setOnClickListener(v -> {
@@ -66,11 +67,13 @@ public class EditAlarm extends AppCompatActivity {
           //OK Button
           binding.btnOK.setOnClickListener(v -> {
               AlarmEntity alarm;
+              //Getting Alarm Label
+              String label = binding.alarmEditTxt.getText().toString().trim();
               if(label.isEmpty()){
-                  alarm = new AlarmEntity(String.valueOf(hourOfDay),String.format("%02d",minute));
+                  alarm = new AlarmEntity(String.valueOf(hourOfDay),String.format("%02d",minute),formattedUnit);
               }
               else {
-                   alarm = new AlarmEntity(String.valueOf(hourOfDay), String.format("%02d", minute), label);
+                   alarm = new AlarmEntity(String.valueOf(hourOfDay), String.format("%02d", minute),formattedUnit, label);
               }
               Intent intent = new Intent(this, MainActivity.class);
               intent.putExtra("alarm",alarm);

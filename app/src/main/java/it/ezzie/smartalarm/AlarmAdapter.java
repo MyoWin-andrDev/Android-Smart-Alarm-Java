@@ -53,19 +53,26 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         var alarm = alarmList.get(position);
         //InitTimePick
         holder.binding.alarmTime.setOnClickListener(v -> {
-                TimePickerDialog.OnTimeSetListener timepick = new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog.OnTimeSetListener timePick = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
                         calendar.set(Calendar.MINUTE,minute);
-//                        var formattedTime = new SimpleDateFormat("HH:mm").format(calendar.getTime());
-//                        var formattedHour = new SimpleDateFormat("HH").format(calendar.getTime());
-//                        var formattedMinute = new SimpleDateFormat("mm").format(calendar.getTime());
+                        var formattedTime = new SimpleDateFormat("HH:mm").format(calendar.getTime());
+                        var formattedHour = new SimpleDateFormat("HH").format(calendar.getTime());
+                        var formattedMinute = new SimpleDateFormat("mm").format(calendar.getTime());
                         var formattedUnit = new SimpleDateFormat("a").format(calendar.getTime());
                         holder.binding.alarmUnit.setText(formattedUnit.toUpperCase());
+                        holder.binding.alarmHour.setText(formattedHour);
+                        holder.binding.alarmMinute.setText(formattedMinute);
+                        if(formattedUnit.equals("PM")){
+                            holder.binding.imageView.setImageResource(R.drawable.ic_moon);
+                        }else if(formattedUnit.equals("am")){
+                            holder.binding.imageView.setImageResource(R.drawable.ic_sun);
+                        }
                     }
                 };
-                new TimePickerDialog(context,timepick, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false).show();
+                new TimePickerDialog(context,timePick, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false).show();
 
         });
         holder.binding.alarmLabel.setText(alarm.getAlarmLabel());
