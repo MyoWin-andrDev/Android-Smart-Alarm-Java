@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         initDatabase();
         initUI();
-//        initDialog();
         initListener();
     }
 
@@ -66,47 +65,9 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(alarmAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-//    private void initDialog(){
-//        //Floating Btn
-//        var dialogBinding = ActivityEditAlarmBinding.inflate(getLayoutInflater());
-//        binding.floatingBtn.setOnClickListener(v -> {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            alertDialog = builder.setView(dialogBinding.getRoot())
-//                    .setCancelable(false)
-//                    .create();
-//            alertDialog.setOnShowListener(dialog -> {
-//                alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_dialog);
-//            });
-//            alertDialog.show();
-//        });
-//
-//        dialogBinding.timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> {
-//          calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-//          calendar.set(Calendar.MINUTE,minute);
-//
-//          int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-//          int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
-//          int totalCurrentMinute = currentHour * 60 + currentMinute;
-//          int totalSelectedMinute = hourOfDay * 60 + minute;
-//          int totalResultMinute = totalSelectedMinute - totalCurrentMinute;
-//          int resultHour = totalResultMinute / 60;
-//          int resultMinute = totalResultMinute % 60;
-//          if(totalResultMinute < 0){
-//              resultHour = -resultHour;
-//              resultMinute = -resultMinute;
-//          }
-//          dialogBinding.hour.setText(String.valueOf(resultHour));
-//          dialogBinding.minute.setText(String.format("%02d",resultMinute));
-//        });
-//
-//    }
-//    private void initListener(){
-//        dialogBinding.btnCancel.setOnClickListener(v -> {
-//            alertDialog.cancel();
-//        });
-//    }
     private void initListener(){
         binding.floatingBtn.setOnClickListener(v -> {
+            refreshView();
             Intent intent = new Intent(this, EditAlarm.class);
             startActivityForResult(intent,CREATE_REQUEST_CODE);
         });

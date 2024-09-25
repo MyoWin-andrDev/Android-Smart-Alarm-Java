@@ -82,9 +82,10 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                 new TimePickerDialog(context,timePick, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false).show();
 
         });
+        int resultMinute = Integer.parseInt(alarm.getAlarmMinute());
         holder.binding.alarmLabel.setText(alarm.getAlarmLabel());
         holder.binding.alarmHour.setText(alarm.getAlarmHour());
-        holder.binding.alarmMinute.setText(alarm.getAlarmMinute());
+        holder.binding.alarmMinute.setText(String.format("%02d",resultMinute));
         holder.binding.alarmSwitch.setChecked(alarm.isAlarmOn());
         holder.binding.alarmUnit.setText(alarm.getAlarmUnit().toUpperCase());
         if(alarm.getAlarmUnit().equals("PM")){
