@@ -3,18 +3,18 @@ package it.ezzie.smartalarm;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
+
+import it.ezzie.smartalarm.Data_Access_Object.AlarmDAO;
+import it.ezzie.smartalarm.Database.AppDatabase;
 import it.ezzie.smartalarm.Entity.AlarmEntity;
 import it.ezzie.smartalarm.databinding.AdapterAlarmBinding;
 
@@ -23,7 +23,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     private List<AlarmEntity> alarmList;
     private Calendar calendar = Calendar.getInstance();
     private AlarmClickListener listener;
-
+    private AlarmDAO alarmDAO = AppDatabase.appDatabase.alarmDAO();
     public AlarmAdapter(Context context , List<AlarmEntity> alarmList, AlarmClickListener listener){
         this.context = context;
         this.alarmList = alarmList;
@@ -71,9 +71,10 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                         holder.binding.alarmUnit.setText(formattedUnit.toUpperCase());
                         holder.binding.alarmHour.setText(formattedHour);
                         holder.binding.alarmMinute.setText(formattedMinute);
+                        holder.binding.alarmSwitch.setChecked(true);
                         if(formattedUnit.equals("PM")){
                             holder.binding.imageView.setImageResource(R.drawable.ic_moon);
-                        }else if(formattedUnit.equals("am")){
+                        }else if(formattedUnit.equals("AM")){
                             holder.binding.imageView.setImageResource(R.drawable.ic_sun);
                         }
                     }
@@ -84,10 +85,29 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         holder.binding.alarmLabel.setText(alarm.getAlarmLabel());
         holder.binding.alarmHour.setText(alarm.getAlarmHour());
         holder.binding.alarmMinute.setText(alarm.getAlarmMinute());
+        holder.binding.alarmSwitch.setChecked(alarm.isAlarmOn());
+        holder.binding.alarmUnit.setText(alarm.getAlarmUnit().toUpperCase());
+        if(alarm.getAlarmUnit().equals("PM")){
+            holder.binding.imageView.setImageResource(R.drawable.ic_moon);
+        }
+        else if(alarm.getAlarmUnit().equals("AM")){
+            holder.binding.imageView.setImageResource(R.drawable.ic_sun);
+        }
         var alarms = alarmList.get(position);
-        holder.binding.alarmTime.setOnLongClickListener(v -> {
+        holder.binding.alarmSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                holder.binding.alarmSwitch.setChecked(true);
+                alarms.setAlarmOn(true);
+
+            }
+            else{
+                holder.binding.alarmSwitch.setChecked(false);
+                alarms.setAlarmOn(false);
+            }
+            alarmDAO.updateAlarm(alarms);
+        });
+        holder.binding.listLinear.setOnClickListener(v -> {
             listener.onAlarmClicked(alarms);
-            return true;
         });
     }
 

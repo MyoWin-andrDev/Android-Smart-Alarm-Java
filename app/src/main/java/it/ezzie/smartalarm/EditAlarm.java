@@ -73,19 +73,33 @@ public class EditAlarm extends AppCompatActivity {
 
           //OK Button
               binding.btnOK.setOnClickListener(v -> {
-              String finalHour = String.valueOf(finalResultHour);
-              if(getIntent() != null){
-
+                  //Update
+                  String finalHour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
+                  String finalMinute = String.valueOf(calendar.get(Calendar.MINUTE));
+                  AlarmEntity alarm;
+                  String label = binding.alarmEditTxt.getText().toString().trim();
+              if(getIntent() != null) {
+                  if (alarmList != null) {
+                      if (!finalHour.equals(alarmList.getAlarmHour()) || !finalMinute.equals(alarmList.getAlarmMinute()) || !label.equals(alarmList.getAlarmLabel())) {
+                          alarmList.setAlarmHour(finalHour);
+                          alarmList.setAlarmMinute(finalMinute);
+                          alarmList.setAlarmUnit(formattedUnit);
+                          alarmList.setAlarmLabel(label);
+                          alarmList.setAlarmOn(true);
+                          alarmDAO.updateAlarm(alarmList);
+                          finish();
+                      } else {
+                          finish();
+                      }
+                  }
               }
               //Create
-              AlarmEntity alarm;
               //Getting Alarm Label
-                  String label = binding.alarmEditTxt.getText().toString().trim();
               if(label.isEmpty()){
-                  alarm = new AlarmEntity(String.valueOf(hourOfDay),String.format("%02d",minute),formattedUnit);
+                  alarm = new AlarmEntity(String.valueOf(hourOfDay),String.format("%02d",minute),formattedUnit,true);
               }
               else {
-                   alarm = new AlarmEntity(String.valueOf(hourOfDay), String.format("%02d", minute),formattedUnit, label);
+                   alarm = new AlarmEntity(String.valueOf(hourOfDay), String.format("%02d", minute),formattedUnit,true, label);
               }
               Intent intent = new Intent(this, MainActivity.class);
               intent.putExtra("alarm",alarm);
@@ -103,12 +117,7 @@ public class EditAlarm extends AppCompatActivity {
                 binding.alarmEditTxt.setText(alarmList.getAlarmLabel());
                 binding.btnCancel.setText("Delete");
                 binding.btnOK.setText("Update");
-                Log.d("EditAlarm", "Alarm loaded: " + alarmList.getAlarmHour() + ":" + alarmList.getAlarmMinute());
-            } else {
-                Log.d("EditAlarm", "No alarm data found in Intent.");
             }
-        } else {
-            Log.d("EditAlarm", "Intent is null.");
         }
     }
 

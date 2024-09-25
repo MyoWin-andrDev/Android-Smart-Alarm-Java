@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void refreshView() {
         alarmList = alarmDAO.getAllAlarms();
         alarmAdapter.setAlarm(alarmList);

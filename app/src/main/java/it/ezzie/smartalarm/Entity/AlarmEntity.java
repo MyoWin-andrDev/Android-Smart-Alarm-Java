@@ -19,21 +19,25 @@ public class AlarmEntity implements Serializable {
     private String alarmUnit;
     @ColumnInfo(name = "Label")
     private String alarmLabel;
+    @ColumnInfo(name="On")
+    private boolean alarmOn;
 
     public AlarmEntity(){
 
     }
     @Ignore
-    public AlarmEntity( String alarmHour, String alarmMinute, String alarmUnit){
+    public AlarmEntity( String alarmHour, String alarmMinute, String alarmUnit, boolean alarmOn){
         this.alarmHour = alarmHour;
         this.alarmMinute = alarmMinute;
         this.alarmUnit = alarmUnit;
+        this.alarmOn = alarmOn;
     }
     @Ignore
-    public AlarmEntity( String alarmHour, String alarmMinute,String alarmUnit, String alarmLabel){
+    public AlarmEntity( String alarmHour, String alarmMinute,String alarmUnit, boolean alarmOn, String alarmLabel){
         this.alarmHour = alarmHour;
         this.alarmMinute = alarmMinute;
         this.alarmUnit = alarmUnit;
+        this.alarmOn = alarmOn;
         this.alarmLabel = alarmLabel;
     }
 
@@ -67,6 +71,14 @@ public class AlarmEntity implements Serializable {
 
     public void setAlarmUnit(String alarmUnit) {
         this.alarmUnit = alarmUnit;
+    }
+
+    public boolean isAlarmOn() {
+        return alarmOn;
+    }
+
+    public void setAlarmOn(boolean alarmOn) {
+        this.alarmOn = alarmOn;
     }
 
     public String getAlarmLabel() {
