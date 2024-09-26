@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initListener(){
         binding.floatingBtn.setOnClickListener(v -> {
-            refreshView();
             Intent intent = new Intent(this, EditAlarm.class);
             startActivityForResult(intent,CREATE_REQUEST_CODE);
         });

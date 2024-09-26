@@ -24,6 +24,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     private Calendar calendar = Calendar.getInstance();
     private AlarmClickListener listener;
     private AlarmDAO alarmDAO = AppDatabase.appDatabase.alarmDAO();
+    private AlarmEntity alarm1;
     public AlarmAdapter(Context context , List<AlarmEntity> alarmList, AlarmClickListener listener){
         this.context = context;
         this.alarmList = alarmList;
@@ -72,9 +73,11 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                         holder.binding.alarmHour.setText(formattedHour);
                         holder.binding.alarmMinute.setText(formattedMinute);
                         holder.binding.alarmSwitch.setChecked(true);
-                        if(formattedUnit.equals("PM")){
+                        AlarmEntity alarm1 = new AlarmEntity(formattedHour,formattedMinute,formattedUnit,true);
+                        alarmDAO.createAlarm(alarm1);
+                        if(formattedUnit.equalsIgnoreCase("PM")){
                             holder.binding.imageView.setImageResource(R.drawable.ic_moon);
-                        }else if(formattedUnit.equals("AM")){
+                        }else if(formattedUnit.equalsIgnoreCase("AM")){
                             holder.binding.imageView.setImageResource(R.drawable.ic_sun);
                         }
                     }
@@ -88,10 +91,10 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         holder.binding.alarmMinute.setText(String.format("%02d",resultMinute));
         holder.binding.alarmSwitch.setChecked(alarm.isAlarmOn());
         holder.binding.alarmUnit.setText(alarm.getAlarmUnit().toUpperCase());
-        if(alarm.getAlarmUnit().equals("PM")){
+        if(alarm.getAlarmUnit().equalsIgnoreCase("PM")){
             holder.binding.imageView.setImageResource(R.drawable.ic_moon);
         }
-        else if(alarm.getAlarmUnit().equals("AM")){
+        else if(alarm.getAlarmUnit().equalsIgnoreCase("AM")){
             holder.binding.imageView.setImageResource(R.drawable.ic_sun);
         }
         var alarms = alarmList.get(position);
