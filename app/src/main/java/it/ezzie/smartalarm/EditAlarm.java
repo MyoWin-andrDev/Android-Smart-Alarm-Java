@@ -115,7 +115,7 @@ public class EditAlarm extends AppCompatActivity {
         AlarmManager alarmManager = this.getSystemService(AlarmManager.class);
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("alarmLabel", alarm.getAlarmLabel());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,Integer.parseInt(alarm.getAlarmHour()) * 100 + Integer.parseInt(alarm.getAlarmMinute()), intent , PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,Integer.parseInt(alarm.getAlarmHour()) * 100 + Integer.parseInt(alarm.getAlarmMinute()), intent , PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         //Init Calendar
         Calendar calendar1 = Calendar.getInstance();
         calendar1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(alarm.getAlarmHour()));
