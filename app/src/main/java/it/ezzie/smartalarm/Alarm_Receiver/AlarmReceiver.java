@@ -6,9 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-
 import androidx.core.app.NotificationCompat;
-
 import it.ezzie.smartalarm.R;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -28,14 +26,19 @@ public class AlarmReceiver extends BroadcastReceiver {
             //Create Ringtone
             Uri ringtoneUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.playing_god);
             //Creating Notification Channel
-            NotificationChannel notificationChannel = new NotificationChannel(channelId,"Alarm Notification", NotificationManager.IMPORTANCE_HIGH);
-            notificationChannel.setSound(ringtoneUri,null);
+            NotificationChannel notificationChannel = new NotificationChannel(channelId, "Alarm Notification", NotificationManager.IMPORTANCE_HIGH);
+            notificationChannel.setSound(ringtoneUri, null);
             //Creating Notification Manager
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(notificationChannel);
             //Creating Notification Builder
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context,channelId)
-                    .
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                    .setContentTitle("Alarm")
+                    .setContentText(alarmLabel)
+                    .setSmallIcon(R.drawable.alarm_Icon)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+            notificationManager.notify(1, builder.build());
         }
     }
 }
