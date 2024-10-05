@@ -1,14 +1,10 @@
 package it.ezzie.smartalarm;
 
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,6 +20,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     private Calendar calendar = Calendar.getInstance();
     private AlarmClickListener listener;
     private AlarmDAO alarmDAO = AppDatabase.appDatabase.alarmDAO();
+    private final EditAlarm editAlarm = new EditAlarm();
     public AlarmAdapter(Context context , List<AlarmEntity> alarmList, AlarmClickListener listener){
         this.context = context;
         this.alarmList = alarmList;
@@ -81,6 +78,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                 alarms.setAlarmOn(false);
             }
             alarmDAO.updateAlarm(alarms);
+            editAlarm.scheduleAlarm(alarms);
         });
         holder.binding.listLinear.setOnClickListener(v -> {
             listener.onAlarmClicked(alarms);

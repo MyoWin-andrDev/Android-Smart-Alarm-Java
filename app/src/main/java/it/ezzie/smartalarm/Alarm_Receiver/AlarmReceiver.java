@@ -35,7 +35,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                     .setContentTitle("Alarm")
                     .setContentText(alarmLabel)
-                    .setSmallIcon(R.drawable.alarm_Icon)
+                    .setSmallIcon(R.drawable.alarm_icon)
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
 
             notificationManager.notify(1, builder.build());
