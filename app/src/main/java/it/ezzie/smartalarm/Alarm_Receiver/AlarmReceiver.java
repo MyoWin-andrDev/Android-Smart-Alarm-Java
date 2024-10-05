@@ -1,47 +1,41 @@
 package it.ezzie.smartalarm.Alarm_Receiver;
 
-import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.os.Vibrator;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.app.NotificationCompat;
 
 import it.ezzie.smartalarm.R;
-import it.ezzie.smartalarm.databinding.ActivityAlarmReceiverBinding;
 
-public class AlarmReceiver extends AppCompatActivity {
-    private ActivityAlarmReceiverBinding binding;
-    private MediaPlayer mediaPlayer;
-    private Vibrator vibrator;
+public class AlarmReceiver extends BroadcastReceiver {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        binding = ActivityAlarmReceiverBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        initMedia();
+    public void onReceive(Context context, Intent intent) {
+        String alarmLabel;
+        if(intent.getStringExtra("alarmLabel") == null){
+            alarmLabel = "Alarm is ringing";
+        }else{
+            alarmLabel = intent.getStringExtra("alarmLabel");
+        }
+        createChannel(context, alarmLabel);
     }
-
-    private void initMedia() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.playing_god);
-        mediaPlayer.start();
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                finally {
-                    mediaPlayer.stop();
-                }
-            }
-        });
+    private void createChannel(Context context , String alarmLabel){
+        String channelId = "alarm_channel";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            //Create Ringtone
+            Uri ringtoneUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.playing_god);
+            //Creating Notification Channel
+            NotificationChannel notificationChannel = new NotificationChannel(channelId,"Alarm Notification", NotificationManager.IMPORTANCE_HIGH);
+            notificationChannel.setSound(ringtoneUri,null);
+            //Creating Notification Manager
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(notificationChannel);
+            //Creating Notification Builder
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context,channelId)
+                    .
+        }
     }
 }
