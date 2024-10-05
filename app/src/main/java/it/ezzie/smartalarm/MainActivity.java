@@ -27,12 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private List<AlarmEntity> alarmList;
     private AlarmDAO alarmDAO;
     private AlarmAdapter alarmAdapter;
-    private AlertDialog alertDialog;
-    private Calendar calendar = Calendar.getInstance();
-    private int resultHour;
-    private int resultMinute;
     private static final int CREATE_REQUEST_CODE = 123;
-    private static final int UPDATE_REQUEST_CODE = 234;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -24,7 +24,6 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     private Calendar calendar = Calendar.getInstance();
     private AlarmClickListener listener;
     private AlarmDAO alarmDAO = AppDatabase.appDatabase.alarmDAO();
-    private AlarmEntity alarm1;
     public AlarmAdapter(Context context , List<AlarmEntity> alarmList, AlarmClickListener listener){
         this.context = context;
         this.alarmList = alarmList;
@@ -58,33 +57,6 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     @Override
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
         var alarm = alarmList.get(position);
-        //InitTimePick
-        holder.binding.alarmTime.setOnClickListener(v -> {
-                TimePickerDialog.OnTimeSetListener timePick = new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        calendar.set(Calendar.MINUTE,minute);
-                        var formattedTime = new SimpleDateFormat("HH:mm").format(calendar.getTime());
-                        var formattedHour = new SimpleDateFormat("HH").format(calendar.getTime());
-                        var formattedMinute = new SimpleDateFormat("mm").format(calendar.getTime());
-                        var formattedUnit = new SimpleDateFormat("a").format(calendar.getTime());
-                        holder.binding.alarmUnit.setText(formattedUnit.toUpperCase());
-                        holder.binding.alarmHour.setText(formattedHour);
-                        holder.binding.alarmMinute.setText(formattedMinute);
-                        holder.binding.alarmSwitch.setChecked(true);
-                        AlarmEntity alarm1 = new AlarmEntity(formattedHour,formattedMinute,formattedUnit,true);
-                        alarmDAO.createAlarm(alarm1);
-                        if(formattedUnit.equalsIgnoreCase("PM")){
-                            holder.binding.imageView.setImageResource(R.drawable.ic_moon);
-                        }else if(formattedUnit.equalsIgnoreCase("AM")){
-                            holder.binding.imageView.setImageResource(R.drawable.ic_sun);
-                        }
-                    }
-                };
-                new TimePickerDialog(context,timePick, calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false).show();
-
-        });
         int resultMinute = Integer.parseInt(alarm.getAlarmMinute());
         holder.binding.alarmLabel.setText(alarm.getAlarmLabel());
         holder.binding.alarmHour.setText(alarm.getAlarmHour());

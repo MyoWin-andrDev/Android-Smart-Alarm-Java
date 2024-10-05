@@ -3,6 +3,7 @@ package it.ezzie.smartalarm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,9 +57,7 @@ public class EditAlarm extends AppCompatActivity {
               resultHour = -resultHour;
               resultMinute = -resultMinute;
           }
-          binding.hour.setText(String.valueOf(resultHour));
-          binding.minute.setText(String.format("%02d",resultMinute));
-
+          binding.timeCount.setText(new StringBuilder().append(" Your alarm will ring in ").append(String.valueOf(resultHour)).append(" hr ").append(String.format("%02d", resultMinute)).append(" min.").toString());
           //Init AlarmUnit
             var formattedUnit = new SimpleDateFormat("a").format(calendar.getTime());
 
