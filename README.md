@@ -31,4 +31,4 @@ A simple Android application that allows users to set, edit, and manage alarms. 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/phyo-105438/Android-Smart-Alarm.git
+   git clone https://github.com/phyo-105438/Android-Smart-Alarm-Java.git
