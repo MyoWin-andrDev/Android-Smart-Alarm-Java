@@ -1,3 +1,6 @@
+## ⭐️ Star this project
+If you like this project, please give it a star! It helps others find it and shows your support.
+
 # Smart Alarm App
 
 A simple Android application that allows users to set, edit, and manage alarms. The app utilizes Room for local database management and provides a user-friendly interface for creating and modifying alarms.
