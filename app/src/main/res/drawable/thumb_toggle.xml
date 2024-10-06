@@ -7,7 +7,7 @@
     </item>
     <item android:state_checked="false">
         <shape android:shape="oval">
-            <solid android:color="@color/grey1" /> <!-- Color when unchecked -->
+            <solid android:color="@color/greenDark" /> <!-- Color when unchecked -->
         </shape>
     </item>
 </selector>

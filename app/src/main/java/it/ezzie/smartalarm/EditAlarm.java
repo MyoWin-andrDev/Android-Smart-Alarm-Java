@@ -2,6 +2,7 @@ package it.ezzie.smartalarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -103,7 +104,7 @@ public class EditAlarm extends AppCompatActivity {
               else {
                    alarm = new AlarmEntity(String.valueOf(hourOfDay), String.format("%02d", minute),formattedUnit,true, label);
               }
-              scheduleAlarm(alarm);
+              scheduleAlarm(this,alarm);
               Intent intent = new Intent(this, MainActivity.class);
               intent.putExtra("alarm",alarm);
               setResult(RESULT_OK,intent);
@@ -111,11 +112,11 @@ public class EditAlarm extends AppCompatActivity {
           });
         });
     }
-    public void scheduleAlarm(AlarmEntity alarm){
-        AlarmManager alarmManager = this.getSystemService(AlarmManager.class);
-        Intent intent = new Intent(this, AlarmReceiver.class);
+    public void scheduleAlarm(Context context, AlarmEntity alarm){
+        AlarmManager alarmManager = context.getSystemService(AlarmManager.class);
+        Intent intent = new Intent(context ,AlarmReceiver.class);
         intent.putExtra("alarmLabel", alarm.getAlarmLabel());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,Integer.parseInt(alarm.getAlarmHour()) * 100 + Integer.parseInt(alarm.getAlarmMinute()), intent , PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,Integer.parseInt(alarm.getAlarmHour()) * 100 + Integer.parseInt(alarm.getAlarmMinute()), intent , PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         //Init Calendar
         Calendar calendar1 = Calendar.getInstance();
         calendar1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(alarm.getAlarmHour()));
@@ -129,7 +130,7 @@ public class EditAlarm extends AppCompatActivity {
             alarmManager.cancel(pendingIntent);
         }
     }
-
+    //Update UI
     private void initUI() {
         if (getIntent() != null) {
             alarmList = (AlarmEntity) getIntent().getSerializableExtra("alarm");

@@ -20,6 +20,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     private Calendar calendar = Calendar.getInstance();
     private AlarmClickListener listener;
     private AlarmDAO alarmDAO = AppDatabase.appDatabase.alarmDAO();
+    private EditAlarm editAlarm;
     public AlarmAdapter(Context context , List<AlarmEntity> alarmList, AlarmClickListener listener){
         this.context = context;
         this.alarmList = alarmList;
@@ -52,6 +53,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 
     @Override
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
+        EditAlarm editAlarm = new EditAlarm();
         var alarm = alarmList.get(position);
         int resultMinute = Integer.parseInt(alarm.getAlarmMinute());
         holder.binding.alarmLabel.setText(alarm.getAlarmLabel());
@@ -76,6 +78,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                 holder.binding.alarmSwitch.setChecked(false);
                 alarms.setAlarmOn(false);
             }
+            editAlarm.scheduleAlarm(context,alarms);
             alarmDAO.updateAlarm(alarms);
 
         });
@@ -83,6 +86,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
             listener.onAlarmClicked(alarms);
         });
     }
+
 
     @Override
     public int getItemCount() {
