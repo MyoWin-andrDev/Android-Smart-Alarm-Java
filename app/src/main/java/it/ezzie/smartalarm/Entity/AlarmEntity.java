@@ -22,9 +22,8 @@ public class AlarmEntity implements Serializable {
     @ColumnInfo(name="On")
     private boolean alarmOn;
 
-    public AlarmEntity(){
+    public AlarmEntity() {}
 
-    }
     @Ignore
     public AlarmEntity( String alarmHour, String alarmMinute, String alarmUnit, boolean alarmOn){
         this.alarmHour = alarmHour;

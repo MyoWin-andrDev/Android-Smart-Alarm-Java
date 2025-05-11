@@ -17,7 +17,7 @@ public interface AlarmDAO {
     @Update
     void updateAlarm(AlarmEntity alarm);
     @Delete
-    void deleteAlarm(AlarmEntity alarm);
+    void deleteAlarm(AlarmEntity alarm );
     @Query("SELECT * FROM Alarms")
     List<AlarmEntity> getAllAlarms();
 }
